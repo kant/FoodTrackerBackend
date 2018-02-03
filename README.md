@@ -35,7 +35,7 @@ If you would like to jump straight to one of these next steps a completed versio
    1. Install CocoaPods:
    `sudo gem install cocoapods`
 
-3. Clone this project from GitHub to your machine (don't use the Download ZIP option):
+3. Clone this project from GitHub to your machine (don't use the `Download ZIP` option):
    ```
    cd ~
    git clone http://github.com/IBM/FoodTrackerBackend
@@ -57,9 +57,9 @@ open FoodTracker.xcodeproj
 ```  
 
 3. Run the project to ensure that it's working  
-    1. Press the Run button or use the ⌘+R key shortcut.  
-    2. Add a meal in the Simulator by clicking the '+' button, providing a name, selecting a photo and a rating and clicking "Save".
-    3. Check that you receive a “Meals successfully saved.” message in the console
+    1. Press the `Run` button or use the `⌘+R` key shortcut.  
+    2. Add a meal in the Simulator by clicking the `+` button, providing a name, selecting a photo and a rating and clicking `Save`.
+    3. Check that you receive a `Meals successfully saved.` message in the console
 
 ## Building a Kitura Backend
 The Food Tracker application stores the meal data to the local device, which means it's not possible to share the data with other users, or to build an additional web interface for the application. The following steps show you how to create a Kitura Backend to allow you to store and share the data.
@@ -77,12 +77,12 @@ kitura init
 ```  
 The Kitura CLI will now create and build an starter Kitura application for you. This includes adding best-practice implementations of capabilities such as configuration, health checking and monitoring to the application for you.
 
-More information about the [project structure](http://kitura.io/en/starter/generator/project_layout_reference.html) is available on kitura.io.
+More information about the [project structure](http://kitura.io/en/starter/generator/project_layout_reference.html) is available on [kitura.io](http://www.kitura.io/).
 
 ### 2. Create an in-memory data store for Meals
 The `init` command has created a fully running Kitura application, but one which has no application logic. In order to use it to store the data from the FoodTracker application, you need to create a datastore in the Kitura application for the Meal data from the FoodTracker iOS application. This tutorial uses a simple in-memory dictionary to store exactly the same Meal types that are used in the FoodTracker application.
 
-1. Copy the Meal.swift file from the FoodTracker app to the Server
+1. Copy the `Meal.swift` file from the FoodTracker app to the Server
    ```
    cd ~/FoodTrackerBackend
    cp ./iOS/FoodTracker/FoodTracker/Meal.swift ./FoodServer/Sources/Application
@@ -92,13 +92,13 @@ The `init` command has created a fully running Kitura application, but one which
    cd ~/FoodTrackerBackend/FoodServer  
    open FoodServer.xcodeproj
    ```
-3. Add the Meal.swift file into the FoodServer project  
+3. Add the `Meal.swift` file into the FoodServer project  
    1. Select the yellow Sources > Application folder in the left hand explorer menu  
    2. Click right mouse and select Add Files to "FoodServer"...
-   3. Find the Meal.swift file found in FoodTrackerBackend > FoodServer > Sources > Application
+   3. Find the `Meal.swift` file found in FoodTrackerBackend > FoodServer > Sources > Application
    4. Single right click it, then select the Options button. Scroll down about halfway through the "Add to targets" and tick "Application". Untick any other options in "add to targets" and click "Add".
 4. Add a dictionary to the Application.swift file to store the Meal types  
-   1. Open the Sources > Application > Application.swift file
+   1. Open the `Sources` > `Application` > `Application.swift` file
    2. Add a "mealstore" inside the app class,  by inserting the following code:
       ```
       private var mealStore: [String: Meal] = [:]
@@ -108,9 +108,9 @@ The `init` command has created a fully running Kitura application, but one which
 This now provides a simple dictionary to store Meal data passed to the FoodServer from the FoodTracker app.
 
 ### 3. Create a REST API to allow FoodTracker to store Meals
-REST APIs typically consist of a HTTP request using a verb such as POST, PUT, GET or DELETE along with a URL and an optional data payload. The server then handles the request and responds with an optional data payload.
+REST APIs typically consist of a HTTP request using a verb such as `POST`, `PUT`, `GET` or `DELETE` along with a URL and an optional data payload. The server then handles the request and responds with an optional data payload.
 
-A request to store data typically consists of a POST request with the data to be stored, which the server then handles and responds with a copy of the data that has just been stored.
+A request to store data typically consists of a `POST` request with the data to be stored, which the server then handles and responds with a copy of the data that has just been stored.
 
 1. Register a handler for a `POST` request on `/meals` that stores the data  
 Add the following into the `postInit()` function in the App class:
@@ -118,7 +118,7 @@ Add the following into the `postInit()` function in the App class:
 router.post("/meals", handler: storeHandler)
 ```
 2. Implement the storeHandler that receives a Meal, and returns the stored Meal  
-Add the following code as a function in the App class, beneath the postInit() function:  
+Add the following code as a function in the App class, beneath the `postInit()` function:  
 ```swift
     func storeHandler(meal: Meal, completion: (Meal?, RequestError?) -> Void ) {
         mealStore[meal.name] = meal
@@ -126,7 +126,7 @@ Add the following code as a function in the App class, beneath the postInit() fu
     }
 ```    
 
-As well as being able to store Meals on the FoodServer, the FoodTracker app will also need to be able to access the stored meals. A request to load all of the stored data typically consists of a GET request with no data, which the server then handles and responds with an array of the data that has just been stored.
+As well as being able to store Meals on the FoodServer, the FoodTracker app will also need to be able to access the stored meals. A request to load all of the stored data typically consists of a `GET` request with no data, which the server then handles and responds with an array of the data that has just been stored.
 
 3. Register a handler for a `GET` request on `/meals` that loads the data  
 Add the following into the `postInit()` function:  
@@ -146,28 +146,28 @@ Add the following as another function in the App class:
 
 
 1. Run the server project in Xcode
-    1. Edit the scheme by clicking on the "FoodServer-Package" section on the top-left the toolbar and selecting "Edit scheme"
-    2. In "Run" click on the "Executable" dropdown, select FoodServer and click Close
-    3. Press the Run button or use the ⌘+R key shortcut.
-    4. Select "Allow incoming network connections" if you are prompted.
+    1. Edit the scheme by clicking on the `FoodServer-Package` section on the top-left the toolbar and selecting `Edit scheme`
+    2. In `Run` click on the `Executable` dropdown, select `FoodServer` and click `Close`
+    3. Press the `Run` button or use the `⌘+R` key shortcut.
+    4. Select `Allow incoming network connections` if you are prompted.
 
 2. Check that some of the standard Kitura URLs are running:
     * Kitura Monitoring: http://localhost:8080/swiftmetrics-dash/
     * Kitura Health check: http://localhost:8080/health
 
 3. Test the GET REST API is running correctly  
-There are many utilities for testing REST APIs, such as [Postman](https://www.getpostman.com). Here we'll use "curl", which is a simple command line utility:
+There are many utilities for testing REST APIs, such as [Postman](https://www.getpostman.com). Here we'll use `curl`, which is a simple command line utility:
 ```
 curl -X GET \
   http://localhost:8080/meals \
   -H 'content-type: application/json'
 ```
-If the GET endpoint is working correctly, this should return an array of JSON data representing the stored Meals. As no data is yet stored, this should return an empty array, ie:  
+If the `GET` endpoint is working correctly, this should return an array of JSON data representing the stored Meals. As no data is yet stored, this should return an empty array, ie:  
 ```
 []
 ```
-4.  Test the POST REST API is running correctly  
-In order to test the POST API, we make a similar call, but also sending in a JSON object that matches the Meal data:  
+4.  Test the `POST REST API` is running correctly  
+In order to test the `POST API`, we make a similar call, but also sending in a JSON object that matches the Meal data:  
 ```
 curl -X POST \
   http://localhost:8080/meals \
@@ -183,14 +183,14 @@ If the POST endpoint is working correctly, this should return the same JSON that
 {"name":"test","photo":"0e430e3a","rating":1}
 ```
 
-5. Test the GET REST API is returning the stored data correctly  
-In order to check that the data is being stored correctly, re-run the GET check:  
+5. Test the `GET REST API` is returning the stored data correctly  
+In order to check that the data is being stored correctly, re-run the `GET` check:  
 ```
 curl -X GET \
   http://localhost:8080/meals \
   -H 'content-type: application/json'
 ```
-This should now return a single entry array containing the Meal that was stored by the POST request, eg:  
+This should now return a single entry array containing the Meal that was stored by the `POST` request, eg:  
 ```
 [{"name":"test","photo":"0e430e3a","rating":1}]
 ```
@@ -293,7 +293,7 @@ curl -X GET \
   http://localhost:8080/meals \
   -H 'content-type: application/json'
 ```
-This should now return an array containing the Meals that was stored by the POST request. As this contains the full images stored in the Meal objects, this will involve several screens of data!
+This should now return an array containing the Meals that was stored by the `POST` request. As this contains the full images stored in the Meal objects, this will involve several screens of data!
 
 ### Congratulations, you have successfully build a Kitura Backend for an iOS app!
 
@@ -313,7 +313,7 @@ The following steps describe how to start to [Build a FoodTracker Web Applicatio
 ### Deploy and host the Kitura FoodServer in the Cloud
 In order for a real iOS app to connect to a Kitura Server, it needs to be hosted at a public URL that the iOS app can reach.
 
-Kitura is deployable to any cloud, but the project created with `kitura init` provides additonal files so that it is pre-configured for clouds that support any of Cloud Foundry, Docker or Kubernetes. The follow contains the steps to take the Kitura FoodServer and [Deploy to the IBM Cloud using Cloud Foundry](DeployToCloud.md).
+Kitura is deployable to any cloud, but the project created with `kitura init` provides additional files so that it is pre-configured for clouds that support any of Cloud Foundry, Docker or Kubernetes. The follow contains the steps to take the Kitura FoodServer and [Deploy to the IBM Cloud using Cloud Foundry](DeployToCloud.md).
 
 ### View a sample Todo list application using Kitura
 This tutorial takes you through the basics of creating a Kitura server. To see a completed Todo list application with demonstrations of all HTTP requests go to [iOSSampleKituraKit](https://github.com/IBM-Swift/iOSSampleKituraKit)
